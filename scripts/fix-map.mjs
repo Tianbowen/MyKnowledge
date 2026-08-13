@@ -1,0 +1,28 @@
+import fs from "fs"
+
+fs.writeFileSync(
+  "content/Maps/知识地图.md",
+  `---
+title: 知识地图
+description: 漫游 Erwin 的主题岛屿
+tags:
+  - 地图
+  - 期号/01
+---
+
+<div class="erwin-map">
+<p class="erwin-kicker">地图 · 漫游</p>
+<p class="erwin-map-lead">不按文件夹走路，而按岛屿漫游。Inbox / PARA / Zettelkasten / Journal 是思想透镜，见 <a href="../method" data-no-popover="true">Method</a>。</p>
+<div class="erwin-map-grid">
+<a class="erwin-island erwin-island--knowledge" href="../knowledge/" data-no-popover="true"><span>知识岛</span><em>概念与可复用领悟</em></a>
+<a class="erwin-island erwin-island--reading" href="../reading/" data-no-popover="true"><span>阅读湾</span><em>窗边消化输入</em></a>
+<a class="erwin-island erwin-island--growth" href="../growth/" data-no-popover="true"><span>成长径</span><em>长期维护的能力</em></a>
+<a class="erwin-island erwin-island--taste" href="../taste/" data-no-popover="true"><span>品味湾</span><em>咖啡·美食·电影</em></a>
+<a class="erwin-island erwin-island--journal" href="../journal/" data-no-popover="true"><span>手账岸</span><em>经历与下一步</em></a>
+<a class="erwin-island erwin-island--studio" href="../method" data-no-popover="true"><span>后厨</span><em>方法与工作室</em></a>
+</div>
+</div>
+`,
+  "utf8",
+)
+console.log("map fixed")

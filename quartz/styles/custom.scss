@@ -1,0 +1,1330 @@
+@use "./variables.scss" as *;
+
+// ============================================================
+// Erwin — Sol Editorial
+// Default: sunny warm light. Dark: deep amber night.
+// Driven by Quartz `saved-theme` (light/dark toggle).
+// ============================================================
+
+:root,
+:root[saved-theme="light"] {
+  --erwin-page: #fff4e8;
+  --erwin-page-2: #ffe8cc;
+  --erwin-ink: #2b1d14;
+  --erwin-ink-soft: #5c4030;
+  --erwin-paper: #fffaf4;
+  --erwin-paper-edge: #efd9c0;
+  --erwin-topbar: rgba(255, 250, 244, 0.86);
+  --erwin-topbar-ink: #2b1d14;
+  --erwin-topbar-muted: #7a5a42;
+  --erwin-line: rgba(43, 29, 20, 0.1);
+  --erwin-accent: #ea580c;
+  --erwin-accent-soft: #c2410c;
+  --erwin-glow: rgba(251, 191, 36, 0.35);
+  --erwin-home-veil-a: rgba(255, 244, 230, 0.18);
+  --erwin-home-veil-b: rgba(255, 214, 160, 0.42);
+  --erwin-home-copy: #2b1d14;
+  --erwin-home-copy-soft: #5c4030;
+  --erwin-card: #fffaf4;
+  --erwin-card-ink: #2b1d14;
+  --erwin-mag-bg: #fff1df;
+  --erwin-feature-scrim: linear-gradient(180deg, transparent, rgba(43, 29, 20, 0.72) 45%);
+}
+
+:root[saved-theme="dark"] {
+  --erwin-page: #17120f;
+  --erwin-page-2: #241a14;
+  --erwin-ink: #fff7ed;
+  --erwin-ink-soft: #e7d5c2;
+  --erwin-paper: #221914;
+  --erwin-paper-edge: #3a2a20;
+  --erwin-topbar: rgba(34, 25, 20, 0.88);
+  --erwin-topbar-ink: #fff7ed;
+  --erwin-topbar-muted: #d6c0aa;
+  --erwin-line: rgba(255, 247, 237, 0.12);
+  --erwin-accent: #fb923c;
+  --erwin-accent-soft: #fdba74;
+  --erwin-glow: rgba(251, 146, 60, 0.22);
+  --erwin-home-veil-a: rgba(20, 14, 10, 0.55);
+  --erwin-home-veil-b: rgba(20, 14, 10, 0.78);
+  --erwin-home-copy: #fff7ed;
+  --erwin-home-copy-soft: #e7d5c2;
+  --erwin-card: #2a1e17;
+  --erwin-card-ink: #fff7ed;
+  --erwin-mag-bg: #1b1410;
+  --erwin-feature-scrim: linear-gradient(180deg, transparent, rgba(12, 8, 6, 0.88) 42%);
+}
+
+html:has(body[data-slug="index"]) {
+  scroll-behavior: smooth;
+}
+
+// Kill Quartz default page max-width gutters (desktop + 300px)
+.page[data-frame="reading"] {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+}
+
+.page[data-frame="reading"] > #quartz-body {
+  display: block;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 !important;
+  grid-template-columns: unset;
+  grid-template-areas: unset;
+}
+
+body {
+  background:
+    radial-gradient(900px 420px at 10% -5%, var(--erwin-glow), transparent 55%),
+    radial-gradient(800px 380px at 95% 0%, rgba(234, 88, 12, 0.12), transparent 50%),
+    linear-gradient(180deg, var(--erwin-page) 0%, var(--erwin-page-2) 100%);
+  color: var(--erwin-ink);
+  transition:
+    background 220ms ease,
+    color 220ms ease;
+}
+
+:root[saved-theme="dark"] body {
+  background:
+    radial-gradient(900px 420px at 12% -8%, var(--erwin-glow), transparent 55%),
+    linear-gradient(180deg, var(--erwin-page) 0%, var(--erwin-page-2) 100%);
+}
+
+// ---- Shell / Topbar ----
+.erwin-shell {
+  width: 100%;
+  margin: 0;
+  padding: 0 0 0.5rem;
+}
+
+.erwin-shell--page {
+  padding-bottom: 0;
+}
+
+.erwin-topbar {
+  position: sticky;
+  top: 0.75rem;
+  z-index: 60;
+  width: min(980px, calc(100% - 1.25rem));
+  margin: 0 auto 1.25rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--erwin-line);
+  background: var(--erwin-topbar);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(43, 29, 20, 0.08);
+}
+
+.erwin-shell--page .erwin-topbar {
+  border-radius: 1.1rem;
+}
+
+.erwin-topbar-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.erwin-topbar-main header {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.55rem 0.75rem;
+  margin: 0;
+  min-height: 2rem;
+
+  // Keep brand / search / theme on one optical baseline
+  .page-title,
+  .flex-component,
+  .search,
+  .darkmode {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .flex-component {
+    flex: 1 1 auto;
+    min-width: 0;
+    align-self: center !important;
+  }
+
+  .page-title {
+    flex: 0 0 auto;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      height: 2rem;
+      color: var(--erwin-topbar-ink);
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+      line-height: 1;
+      text-decoration: none;
+    }
+    a:hover {
+      color: var(--erwin-accent);
+    }
+  }
+
+  .search {
+    flex: 1 1 10rem;
+    min-width: 7rem;
+    max-width: none;
+  }
+
+  .search > .search-button {
+    width: 100%;
+    height: 2rem;
+    border-radius: 999px;
+    border: 1px solid var(--erwin-line);
+    background: color-mix(in srgb, var(--erwin-paper) 80%, transparent);
+    color: var(--erwin-topbar-ink);
+    padding: 0 0.85rem 0 0;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .search > .search-button > p {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-size: 0.9rem;
+    color: var(--erwin-topbar-muted);
+  }
+
+  .search > .search-button svg {
+    width: 16px;
+    min-width: 16px;
+    height: 16px;
+    margin: 0 0.45rem 0 0.65rem;
+    display: block;
+  }
+
+  .darkmode {
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 2rem;
+    position: relative;
+  }
+
+  .darkmode svg {
+    width: 18px;
+    height: 18px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--erwin-topbar-ink);
+    fill: var(--erwin-topbar-ink);
+  }
+
+  .search > .search-button p,
+  .darkmode svg {
+    color: var(--erwin-topbar-ink);
+    fill: var(--erwin-topbar-ink);
+  }
+}
+
+.erwin-seatnav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.28rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--erwin-line);
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    color: var(--erwin-topbar-muted) !important;
+    font-size: 0.8rem;
+    line-height: 1;
+    min-height: 1.7rem;
+    padding: 0 0.72rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+  }
+
+  a:hover {
+    color: var(--erwin-topbar-ink) !important;
+    border-color: color-mix(in srgb, var(--erwin-accent) 45%, transparent);
+  }
+}
+
+.erwin-footerbar {
+  width: min(980px, calc(100% - 1.25rem));
+  margin: 0.35rem auto 1rem;
+}
+
+// Only the site chrome footer — NOT article endmatter (<footer class="erwin-endmatter">)
+.erwin-footerbar > footer {
+  width: 100%;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0.65rem 0 0;
+  border-top: 1px solid var(--erwin-line);
+  color: var(--erwin-ink-soft);
+  opacity: 1;
+  text-align: left;
+
+  // Hide Quartz credit line ("Created with Quartz … © …")
+  > p {
+    display: none;
+  }
+
+  ul {
+    margin: 0 !important;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.85rem 1.1rem;
+  }
+
+  li {
+    margin: 0;
+    line-height: 1;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    color: var(--erwin-accent-soft) !important;
+  }
+}
+
+// Kill Quartz footer plugin's large bottom gap on any leftover footer
+footer {
+  margin-bottom: 0 !important;
+}
+
+// ---- Reading paper ----
+.erwin-reading {
+  width: min(880px, calc(100% - 1.25rem));
+  margin: 0 auto;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+.erwin-paper {
+  background: var(--erwin-paper);
+  color: var(--erwin-ink);
+  border-radius: 1.2rem;
+  padding: clamp(1.15rem, 2.8vw, 2rem);
+  border: 1px solid var(--erwin-paper-edge);
+  box-shadow: 0 16px 40px rgba(43, 29, 20, 0.08);
+
+  .article-title {
+    color: var(--erwin-ink);
+    font-size: clamp(1.8rem, 3.6vw, 2.4rem);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  // Editorial header replaces default H1
+  &.erwin-paper--editorial .article-title {
+    display: none !important;
+  }
+
+  .page-header {
+    margin: 0 !important;
+    padding: 0;
+  }
+
+  &.erwin-paper--editorial .page-header {
+    margin-top: 0.35rem !important;
+  }
+
+  .content-meta,
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.65rem;
+    margin: 0;
+    color: var(--erwin-ink-soft);
+    font-size: 0.88rem;
+    line-height: 1.35;
+  }
+
+  .content-meta > * {
+    margin: 0;
+    line-height: 1.35;
+  }
+
+  a,
+  a.internal,
+  a.external {
+    color: var(--erwin-accent-soft);
+  }
+
+  a:hover {
+    color: var(--erwin-accent);
+  }
+
+  article {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--erwin-ink-soft);
+  }
+
+  article h1,
+  article h2,
+  article h3 {
+    color: var(--erwin-ink);
+  }
+
+  article blockquote {
+    border-left: 3px solid var(--erwin-accent);
+    background: color-mix(in srgb, var(--erwin-accent) 10%, transparent);
+    padding: 0.85rem 1rem;
+    border-radius: 0 0.65rem 0.65rem 0;
+    color: var(--erwin-ink);
+  }
+
+  // Compact warm banners (Kinfolk / Cereal style: short editorial strip)
+  article p > img,
+  article img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    max-height: 9.5rem;
+    object-fit: cover;
+    object-position: center 40%;
+    margin: 0.2rem 0 1rem;
+    border-radius: 0.9rem;
+    border: 1px solid var(--erwin-paper-edge);
+    box-shadow: 0 8px 20px rgba(43, 29, 20, 0.08);
+  }
+
+  article > .markdown-preview-view > p:first-child:has(> img:only-child) img,
+  article .markdown-rendered > p:first-child:has(> img:only-child) img,
+  article p:first-child:has(> img:only-child) > img {
+    max-height: 8rem;
+  }
+
+  // Hide Quartz auto folder dump when we already curated postcards
+  &:has(.erwin-postcards) .folder-list,
+  &:has(.erwin-postcards) ul:has(> li > .meta),
+  &:has(.erwin-postcards) > .page-footer + *,
+  .folder-page &:has(.erwin-postcards) ul {
+    // no-op placeholder — folder listing targeted below
+  }
+}
+
+// ---- Editorial note chrome (header / endmatter / kinds) ----
+.erwin-edhead {
+  margin: 0 0 0.35rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--erwin-line);
+}
+
+.erwin-edhead-kicker {
+  margin: 0 0 0.45rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--erwin-accent);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.erwin-edhead-title {
+  margin: 0;
+  color: var(--erwin-ink);
+  font-size: clamp(1.85rem, 3.8vw, 2.55rem);
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+}
+
+.erwin-edhead-lead {
+  margin: 0.7rem 0 0;
+  max-width: 38ch;
+  color: var(--erwin-ink-soft);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.erwin-edhead-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.9rem;
+  align-items: center;
+  margin: 0.85rem 0 0;
+  font-size: 0.86rem;
+  color: var(--erwin-ink-soft);
+}
+
+.erwin-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--erwin-ink);
+
+  &::before {
+    content: "";
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--erwin-accent-soft);
+  }
+
+  &--seed::before {
+    background: #c4a484;
+  }
+
+  &--growing::before {
+    background: var(--erwin-accent);
+  }
+
+  &--evergreen::before {
+    background: #2f6f4e;
+  }
+}
+
+.erwin-tended {
+  opacity: 0.9;
+}
+
+.erwin-endmatter {
+  margin: 1.75rem 0 0.25rem;
+  padding: 1.1rem 0 0;
+  border-top: 1px solid var(--erwin-line);
+  display: grid;
+  gap: 1.15rem;
+  // reset site-footer chrome if any global footer rules leak
+  opacity: 1;
+  text-align: left;
+}
+
+.erwin-endmatter-title {
+  margin: 0 0 0.45rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--erwin-accent);
+  line-height: 1.2;
+}
+
+.erwin-takeaways ol {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--erwin-ink-soft);
+  line-height: 1.7;
+  display: block;
+}
+
+.erwin-takeaways li + li {
+  margin-top: 0.25rem;
+}
+
+// Vertical stack — must override any footer ul { display:flex; row } rules
+.erwin-continues ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none;
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-start !important;
+  gap: 0.4rem !important;
+  color: var(--erwin-ink-soft);
+}
+
+.erwin-continues li {
+  margin: 0 !important;
+  padding: 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.erwin-continues a {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.4;
+  color: var(--erwin-accent-soft);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--erwin-accent) 35%, transparent);
+
+  &:hover {
+    color: var(--erwin-accent);
+  }
+}
+
+// Kind: long-form essay
+.erwin-kind-essay {
+  .erwin-edhead-title {
+    font-size: clamp(1.95rem, 4vw, 2.7rem);
+  }
+
+  article {
+    font-size: 1.06rem;
+  }
+
+  article p:first-child:has(> img:only-child) > img {
+    max-height: 11rem;
+  }
+}
+
+// Kind: object narrative
+.erwin-kind-object {
+  .erwin-edhead {
+    border-bottom-style: dashed;
+  }
+
+  article p:first-child:has(> img:only-child) > img,
+  article > p:first-of-type img {
+    max-height: 16rem;
+    object-position: center 45%;
+  }
+
+  article > p:first-of-type {
+    font-size: 1.12rem;
+    color: var(--erwin-ink);
+  }
+}
+
+// Kind: journal
+.erwin-kind-journal {
+  .erwin-edhead-title {
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .erwin-edhead-lead {
+    max-width: 46ch;
+    font-size: 0.98rem;
+  }
+
+  article p > img,
+  article img {
+    max-height: 7rem;
+    opacity: 0.92;
+  }
+}
+
+// Kind: atomic card
+.erwin-kind-card {
+  .erwin-edhead-title {
+    font-size: clamp(1.45rem, 2.8vw, 1.9rem);
+  }
+
+  .erwin-edhead-lead {
+    font-size: 0.98rem;
+  }
+
+  article {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  article p > img,
+  article img {
+    display: none;
+  }
+}
+
+// Section landing (popular: Substack/Ghost channel + postcard grid)
+.erwin-section-head {
+  margin: 0.2rem 0 1.1rem;
+}
+
+.erwin-section-lead {
+  margin: 0;
+  color: var(--erwin-ink-soft);
+  line-height: 1.7;
+  font-size: 1.02rem;
+  max-width: 40ch;
+}
+
+.erwin-postcards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+  margin: 1rem 0 0.5rem;
+
+  @media (min-width: 720px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.erwin-postcard {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem 1.05rem;
+  border-radius: 0.95rem;
+  text-decoration: none !important;
+  color: var(--erwin-ink) !important;
+  background: color-mix(in srgb, var(--erwin-accent) 6%, var(--erwin-paper));
+  border: 1px solid var(--erwin-line);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--erwin-accent) 45%, transparent);
+    box-shadow: 0 10px 24px rgba(234, 88, 12, 0.1);
+  }
+
+  strong {
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+
+  em {
+    font-style: normal;
+    color: var(--erwin-ink-soft);
+    font-size: 0.9rem;
+  }
+}
+
+.erwin-postcard-kicker {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--erwin-accent);
+  font-weight: 700;
+}
+
+.erwin-shell--page .erwin-paper article > p:first-of-type {
+  font-size: 1.08rem;
+}
+
+.erwin-meta .backlinks h3 {
+  margin: 0 0 0.45rem;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.erwin-meta .backlinks ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.erwin-meta .backlinks li {
+  margin: 0;
+  line-height: 1.35;
+}
+
+.erwin-meta .backlinks a {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.35;
+}
+
+// Homepage title "Erwin" should not appear as a backlink source
+.backlinks a.internal[href="/"],
+.backlinks a.internal[href="./"],
+.backlinks a.internal[href="../"],
+.backlinks a.internal[href="../../"],
+.backlinks a.internal[href="."],
+.backlinks a.internal[href="/index"],
+.backlinks a.internal[href="./index"],
+.backlinks a.internal[href="../index"] {
+  display: none !important;
+}
+
+.backlinks li:has(> a.internal[href="/"]),
+.backlinks li:has(> a.internal[href="./"]),
+.backlinks li:has(> a.internal[href="../"]),
+.backlinks li:has(> a.internal[href="../../"]),
+.backlinks li:has(> a.internal[href="."]) {
+  display: none !important;
+}
+
+.erwin-meta {
+  margin-top: 1.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--erwin-line);
+
+  .backlinks {
+    padding: 0.85rem 1rem;
+    border-radius: 0.85rem;
+    background: color-mix(in srgb, var(--erwin-accent) 8%, var(--erwin-paper));
+    border: 1px solid var(--erwin-line);
+    color: var(--erwin-ink);
+  }
+
+  .backlinks:not(:has(li:not(.overflow-end))) {
+    display: none;
+  }
+
+  .toc,
+  .graph {
+    display: none !important;
+  }
+}
+
+.erwin-kicker {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--erwin-accent);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.erwin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.15rem;
+  border-radius: 999px;
+  text-decoration: none !important;
+  font-weight: 650;
+  font-size: 0.95rem;
+  line-height: 1;
+  min-height: 2.55rem;
+  box-sizing: border-box;
+}
+
+.erwin-btn--ember {
+  background: var(--erwin-accent);
+  color: #fffaf4 !important;
+  border: 1px solid color-mix(in srgb, var(--erwin-accent) 70%, black);
+}
+
+.erwin-btn--ghost {
+  background: color-mix(in srgb, var(--erwin-paper) 55%, transparent);
+  color: var(--erwin-home-copy) !important;
+  border: 1px solid color-mix(in srgb, var(--erwin-home-copy) 22%, transparent);
+}
+
+.erwin-btn:hover {
+  filter: brightness(1.05);
+}
+
+// ============================================================
+// HOME
+// ============================================================
+
+body[data-slug="index"] {
+  .erwin-topbar {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0.85rem;
+    margin: 0;
+    width: min(720px, calc(100% - 1.25rem));
+  }
+
+  .erwin-shell,
+  .erwin-shell--home,
+  .erwin-reading.center,
+  .erwin-reading {
+    width: 100%;
+    max-width: none !important;
+    min-width: 0 !important;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .erwin-shell--home {
+    padding-bottom: 0;
+  }
+
+  article.popover-hint,
+  article.popover-hint > .markdown-preview-view {
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .erwin-after {
+    display: none !important;
+  }
+
+  .erwin-footerbar {
+    width: min(1120px, calc(100% - 1.5rem));
+  }
+}
+
+.erwin-hero--full {
+  position: relative;
+  min-height: 100svh;
+  width: 100%;
+  display: grid;
+  place-items: end start;
+  overflow: hidden;
+}
+
+.erwin-hero-media {
+  position: absolute;
+  inset: 0;
+  background: url("/static/erwin/hero.png") center / cover no-repeat;
+  transform: scale(1.03);
+  animation: erwin-kenburns 30s ease-in-out infinite alternate;
+}
+
+.erwin-hero-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(105deg, color-mix(in srgb, var(--erwin-page) 88%, transparent) 0%, var(--erwin-home-veil-a) 42%, transparent 70%),
+    linear-gradient(180deg, var(--erwin-home-veil-a) 0%, transparent 40%, var(--erwin-home-veil-b) 100%);
+}
+
+.erwin-hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 40rem;
+  padding: clamp(7rem, 15vh, 9rem) clamp(1.25rem, 5vw, 4rem) 5rem;
+  color: var(--erwin-home-copy);
+}
+
+.erwin-hero-title {
+  margin: 0;
+  font-size: clamp(3.4rem, 10vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--erwin-home-copy);
+  text-shadow: 0 8px 28px rgba(255, 248, 240, 0.35);
+}
+
+:root[saved-theme="dark"] .erwin-hero-title {
+  text-shadow: 0 10px 36px rgba(0, 0, 0, 0.45);
+}
+
+.erwin-hero-slogan {
+  margin: 0.7rem 0 0.95rem;
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  font-weight: 700;
+  color: var(--erwin-accent);
+}
+
+.erwin-hero-lead {
+  margin: 0 0 1.35rem;
+  max-width: 36ch;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--erwin-home-copy-soft);
+}
+
+.erwin-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.erwin-scroll {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 1.3rem;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  color: var(--erwin-home-copy);
+  text-decoration: none !important;
+  font-size: 0.8rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  min-height: 2rem;
+  padding: 0 0.95rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--erwin-home-copy) 22%, transparent);
+  background: color-mix(in srgb, var(--erwin-paper) 70%, transparent);
+  backdrop-filter: blur(8px);
+  box-sizing: border-box;
+
+  &::after {
+    content: "↓";
+    color: var(--erwin-accent);
+    line-height: 1;
+  }
+}
+
+@keyframes erwin-kenburns {
+  from {
+    transform: scale(1.03);
+  }
+  to {
+    transform: scale(1.1) translate3d(-1%, -1%, 0);
+  }
+}
+
+// Magazine on warm stage (not forced noir)
+.erwin-mag,
+.erwin-objects,
+.erwin-strip {
+  width: min(1120px, calc(100% - 1.5rem));
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--erwin-ink);
+}
+
+.erwin-mag {
+  padding: 3.5rem 0 1rem;
+  background: transparent;
+}
+
+.erwin-mag-intro {
+  max-width: 40rem;
+  margin-bottom: 1.5rem;
+}
+
+.erwin-mag-title {
+  margin: 0 0 0.5rem !important;
+  padding: 0 !important;
+  border: 0 !important;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  color: var(--erwin-ink) !important;
+}
+
+.erwin-mag-lead {
+  margin: 0;
+  color: var(--erwin-ink-soft);
+  line-height: 1.7;
+}
+
+.erwin-mag-spread {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.erwin-mag-spread--reverse {
+  direction: rtl;
+  > * {
+    direction: ltr;
+  }
+  @media (max-width: 860px) {
+    direction: ltr;
+  }
+}
+
+.erwin-feature-stack {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.erwin-feature {
+  position: relative;
+  display: block;
+  min-height: 12.5rem;
+  overflow: hidden;
+  border-radius: 1.1rem;
+  text-decoration: none !important;
+  color: #fffaf4 !important;
+  border: 1px solid var(--erwin-line);
+  background: var(--erwin-card);
+  box-shadow: 0 12px 28px rgba(43, 29, 20, 0.1);
+}
+
+.erwin-feature--lead {
+  min-height: 26rem;
+  @media (max-width: 860px) {
+    min-height: 18rem;
+  }
+}
+
+.erwin-feature-media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 400ms ease;
+}
+
+.erwin-feature:hover .erwin-feature-media {
+  transform: scale(1.05);
+}
+
+.erwin-feature-media--garden,
+.erwin-feature-media--map {
+  background-image: linear-gradient(180deg, rgba(43, 29, 20, 0.08), rgba(43, 29, 20, 0.52)), url("/static/erwin/hero.png");
+}
+.erwin-feature-media--read {
+  background-image: linear-gradient(180deg, rgba(43, 29, 20, 0.1), rgba(43, 29, 20, 0.52)), url("/static/erwin/banner-reading.png");
+}
+.erwin-feature-media--grow {
+  background-image: linear-gradient(180deg, rgba(43, 29, 20, 0.1), rgba(43, 29, 20, 0.52)), url("/static/erwin/banner-knowledge.png");
+}
+.erwin-feature-media--taste {
+  background-image: linear-gradient(180deg, rgba(43, 29, 20, 0.1), rgba(43, 29, 20, 0.52)), url("/static/erwin/banner-taste.png");
+}
+.erwin-feature-media--journal {
+  background-image: linear-gradient(180deg, rgba(43, 29, 20, 0.12), rgba(43, 29, 20, 0.55)), url("/static/erwin/banner-reading.png");
+  background-position: 60% 40%;
+}
+
+.erwin-feature-body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.15rem 1.2rem 1.25rem;
+  background: var(--erwin-feature-scrim);
+}
+
+.erwin-feature-label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fdba74;
+  margin-bottom: 0.28rem;
+}
+
+.erwin-feature-title {
+  display: block;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #fffaf4;
+}
+
+.erwin-feature--lead .erwin-feature-title {
+  font-size: clamp(1.9rem, 3.8vw, 2.6rem);
+}
+
+.erwin-feature-desc {
+  display: block;
+  margin-top: 0.28rem;
+  color: rgba(255, 250, 244, 0.92);
+  line-height: 1.5;
+}
+
+.erwin-objects {
+  padding: 2rem 0 0.75rem;
+}
+
+.erwin-objects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  margin-top: 0.9rem;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.erwin-object {
+  display: grid;
+  grid-template-rows: 7.5rem auto;
+  border-radius: 1rem;
+  overflow: hidden;
+  text-decoration: none !important;
+  color: var(--erwin-card-ink) !important;
+  border: 1px solid var(--erwin-line);
+  background: var(--erwin-card);
+}
+
+.erwin-object span:last-child {
+  padding: 0.85rem 0.95rem 1rem;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.erwin-object strong {
+  font-size: 1.02rem;
+}
+.erwin-object em {
+  font-style: normal;
+  color: var(--erwin-ink-soft);
+  font-size: 0.9rem;
+}
+
+.erwin-object-media {
+  background-size: cover;
+  background-position: center;
+}
+.erwin-object-media--cup {
+  background-image: url("/static/erwin/banner-taste.png");
+  background-position: 30% 40%;
+}
+.erwin-object-media--ticket {
+  background-image: url("/static/erwin/banner-taste.png");
+  background-position: 80% 60%;
+}
+.erwin-object-media--book {
+  background-image: url("/static/erwin/banner-knowledge.png");
+  background-position: 50% 40%;
+}
+
+.erwin-strip {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 0.8rem;
+  padding: 1.5rem 0 3.5rem;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.erwin-strip-quote {
+  padding: 1.4rem 1.5rem;
+  border-radius: 1.1rem;
+  background:
+    radial-gradient(480px 160px at 0% 0%, var(--erwin-glow), transparent 60%),
+    var(--erwin-card);
+  border: 1px solid var(--erwin-line);
+  color: var(--erwin-card-ink);
+
+  p {
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.2rem, 2.8vw, 1.55rem);
+    line-height: 1.4;
+    font-weight: 650;
+  }
+
+  span {
+    color: var(--erwin-ink-soft);
+  }
+}
+
+.erwin-strip-links {
+  display: grid;
+  gap: 0.6rem;
+
+  a {
+    display: flex;
+    align-items: center;
+    min-height: 3.35rem;
+    padding: 0.8rem 1rem;
+    border-radius: 0.95rem;
+    text-decoration: none !important;
+    color: var(--erwin-card-ink) !important;
+    background: var(--erwin-card);
+    border: 1px solid var(--erwin-line);
+  }
+
+  a:hover {
+    border-color: var(--erwin-accent);
+    color: var(--erwin-accent) !important;
+  }
+}
+
+// Atlas
+.erwin-map-lead {
+  color: var(--erwin-ink-soft);
+  margin: 0 0 1.1rem;
+  line-height: 1.7;
+}
+
+.erwin-map-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.erwin-island {
+  min-height: 7.8rem;
+  border-radius: 1rem;
+  padding: 1rem 1.05rem;
+  text-decoration: none !important;
+  color: #fffaf4 !important;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 100vmax rgba(43, 29, 20, 0.38);
+}
+
+.erwin-island span {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.erwin-island em {
+  font-style: normal;
+  color: rgba(255, 250, 244, 0.92);
+  margin-top: 0.2rem;
+}
+
+.erwin-island--knowledge {
+  background-image: url("/static/erwin/hero.png");
+}
+.erwin-island--reading {
+  background-image: url("/static/erwin/topics.png");
+  background-position: 90% 10%;
+  background-size: 170%;
+}
+.erwin-island--growth {
+  background-image: url("/static/erwin/topics.png");
+  background-position: 15% 15%;
+  background-size: 170%;
+}
+.erwin-island--taste {
+  background-image: url("/static/erwin/topics.png");
+  background-position: 15% 90%;
+  background-size: 170%;
+}
+.erwin-island--journal {
+  background-image: url("/static/erwin/topics.png");
+  background-position: 90% 90%;
+  background-size: 170%;
+}
+.erwin-island--studio {
+  background-image: url("/static/erwin/hero.png");
+  background-position: 70% 40%;
+}
+
+.erwin-island:hover {
+  box-shadow: inset 0 0 0 100vmax rgba(43, 29, 20, 0.22);
+  outline: 1px solid var(--erwin-accent);
+}
+
+body[data-slug="index"] article pre {
+  display: none !important;
+}
+
+@media #{$mobile} {
+  .erwin-topbar {
+    top: 0.45rem;
+  }
+
+  body[data-slug="index"] .erwin-topbar {
+    width: calc(100% - 0.9rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .erwin-hero-media {
+    animation: none;
+  }
+}
