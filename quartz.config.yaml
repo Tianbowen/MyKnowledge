@@ -1,20 +1,18 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Erwin
+  pageTitle: Quartz 5
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
   analytics:
     provider: plausible
-  locale: zh-CN
+  locale: en-US
   baseUrl: erwin.life
   ignorePatterns:
     - private
     - templates
     - .obsidian
   theme:
-    # Layout/chrome: Quartz v5.0.0 defaults. Skin: @quartz-themes/abate.
-    # Previous Sol Editorial UI: backups/ui-sol-editorial-2026-08-18/
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
@@ -177,7 +175,7 @@ plugins:
       position: left
       priority: 10
   - source: "@quartz-community/darkmode"
-    # Abate is light-only; keep Quartz chrome but avoid a broken dark palette.
+    # Abate is light-only.
     enabled: false
     layout:
       position: left
@@ -207,10 +205,8 @@ plugins:
     enabled: true
     options:
       links:
-        知识地图: /Maps/知识地图
-        写作方法: /Method
-        关于: /About
-        GitHub: https://github.com/Tianbowen/MyKnowledge
+        GitHub: https://github.com/jackyzha0/quartz
+        Discord Community: https://discord.gg/cRFFHYye7t
     layout:
       position: footer
       priority: 50

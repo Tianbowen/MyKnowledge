@@ -1,20 +1,8 @@
 ---
-title: Erwin
-description: 学习 · 联结 · 成长
+title: Welcome to Quartz 5
 ---
 
-一座慢下来的知识花园：把阅读变成可复用的领悟，把成长写成下一步，也把咖啡、美食与电影里的感受留下温度。
+This is a fresh Quartz site. Add Markdown notes under `content/` to publish them.
 
-## 栏目
-
-- [知识](./Knowledge/) — 概念与可复用领悟
-- [阅读](./Reading/) — 书与文章的消化
-- [成长](./Growth/) — 习惯、能力与下一小步
-- [品味](./Taste/) — 咖啡、美食与电影
-- [日记](./Journal/) — 经历、感受与明天一步
-- [知识地图](./Maps/知识地图) — 主题漫游
-
-## 开始
-
-- [写作方法](./Method) — 如何添加与整理文章
-- [关于](./About)
+- [Authoring content](https://quartz.jzhao.xyz/getting-started/authoring-content)
+- [Configuration](https://quartz.jzhao.xyz/configuration)
