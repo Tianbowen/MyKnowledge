@@ -3,23 +3,23 @@ configuration:
   pageTitle: Erwin
   pageTitleSuffix: ""
   enableSPA: true
-  enablePopovers: false
+  enablePopovers: true
   analytics:
     provider: plausible
   locale: zh-CN
-  baseUrl: tianbowen.vercel.app
+  baseUrl: erwin.life
   ignorePatterns:
     - private
     - templates
     - .obsidian
   theme:
-    # Active visual theme: @quartz-themes/abate (light only).
-    # Sol Editorial backup: backups/ui-sol-editorial-2026-08-18/
+    # Layout/chrome: Quartz v5.0.0 defaults. Skin: @quartz-themes/abate.
+    # Previous Sol Editorial UI: backups/ui-sol-editorial-2026-08-18/
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Noto Sans SC
-      body: Noto Sans SC
+      header: Schibsted Grotesk
+      body: Source Sans Pro
       code: IBM Plex Mono
     colors:
       lightMode:
@@ -63,28 +63,18 @@ plugins:
   - source: "@quartz-community/obsidian-flavored-markdown"
     enabled: true
     options:
-      comments: true
-      highlight: true
-      wikilinks: true
-      callouts: true
-      mermaid: true
-      parseTags: true
-      parseArrows: true
-      parseBlockReferences: true
       enableInHtmlEmbed: false
-      enableYouTubeEmbed: true
-      enableVideoEmbed: true
       enableCheckbox: true
     order: 30
   - source: "@quartz-community/github-flavored-markdown"
     enabled: true
     order: 40
   - source: "@quartz-community/table-of-contents"
-    enabled: false
+    enabled: true
     order: 50
     layout:
       position: right
-      priority: 10
+      priority: 30
   - source: "@quartz-community/crawl-links"
     enabled: true
     options:
@@ -102,7 +92,7 @@ plugins:
     enabled: false
     order: 85
   - source: "@quartz-community/hard-line-breaks"
-    enabled: true
+    enabled: false
     order: 90
   - source: "@quartz-community/ox-hugo"
     enabled: false
@@ -122,23 +112,6 @@ plugins:
     enabled: true
   - source: "@quartz-community/explicit-publish"
     enabled: false
-  - source: "@quartz-community/unlisted-pages"
-    enabled: true
-    options: {}
-    order: 45
-  - source: "@quartz-community/encrypted-pages"
-    enabled: true
-    options:
-      iterations: 600000
-      passwordField: password
-      unlistWhenEncrypted: false
-      outputPath: static/encryptedContentIndex.json
-  - source: "@quartz-community/stacked-pages"
-    enabled: false
-    layout:
-      position: afterBody
-      priority: 50
-      display: all
   - source: "@quartz-community/alias-redirects"
     enabled: true
   - source: "@quartz-community/content-index"
@@ -161,19 +134,19 @@ plugins:
   - source: "@quartz-community/tag-page"
     enabled: true
   - source: "@quartz-community/explorer"
-    enabled: false
+    enabled: true
     layout:
       position: left
       priority: 50
   - source: "@quartz-community/graph"
-    enabled: false
+    enabled: true
     layout:
       position: right
-      priority: 30
+      priority: 10
   - source: "@quartz-community/search"
     enabled: true
     layout:
-      position: header
+      position: left
       priority: 20
       group: toolbar
       groupOptions:
@@ -193,7 +166,6 @@ plugins:
     layout:
       position: beforeBody
       priority: 20
-      condition: not-index
   - source: "@quartz-community/tag-list"
     enabled: false
     layout:
@@ -202,23 +174,23 @@ plugins:
   - source: "@quartz-community/page-title"
     enabled: true
     layout:
-      position: header
+      position: left
       priority: 10
   - source: "@quartz-community/darkmode"
-    # Abate is light-only; keep toggle off to avoid a broken dark palette.
+    # Abate is light-only; keep Quartz chrome but avoid a broken dark palette.
     enabled: false
     layout:
-      position: header
+      position: left
       priority: 30
       group: toolbar
   - source: "@quartz-community/reader-mode"
-    enabled: false
+    enabled: true
     layout:
-      position: header
+      position: left
       priority: 35
       group: toolbar
   - source: "@quartz-community/breadcrumbs"
-    enabled: false
+    enabled: true
     layout:
       position: beforeBody
       priority: 5
@@ -235,23 +207,17 @@ plugins:
     enabled: true
     options:
       links:
-        创刊号: /
-        地图: /Maps/知识地图
+        知识地图: /Maps/知识地图
         写作方法: /Method
         关于: /About
+        GitHub: https://github.com/Tianbowen/MyKnowledge
     layout:
       position: footer
       priority: 50
   - source: "@quartz-community/recent-notes"
     enabled: false
-    options:
-      limit: 6
-      showTags: true
-    layout:
-      position: afterBody
-      priority: 20
   - source: "@quartz-community/spacer"
-    enabled: false
+    enabled: true
     options: {}
     order: 25
     layout:
@@ -271,7 +237,7 @@ plugins:
         - tags
         - aliases
       excludedProperties: []
-      hidePropertiesView: true
+      hidePropertiesView: false
       delimiters: ---
       language: yaml
     order: 5
@@ -279,37 +245,46 @@ plugins:
       position: beforeBody
       priority: 15
       display: all
-  # Visual properties panel hidden; plugin kept for frontmatter parsing.
-  - source: "@quartz-community/obsidian-plugin-excalidraw"
+  - source: "@quartz-community/unlisted-pages"
+    enabled: true
+    options: {}
+    order: 45
+  - source: "@quartz-community/encrypted-pages"
     enabled: true
     options:
-      enableInteraction: true
-      darkMode: auto
-      exportPadding: 20
-    order: 50
+      iterations: 600000
+      passwordField: password
+      unlistWhenEncrypted: false
+      outputPath: static/encryptedContentIndex.json
+    order: 900
+  - source: "@quartz-community/stacked-pages"
+    enabled: false
+    layout:
+      position: afterBody
+      priority: 50
+      display: all
 layout:
   groups:
     toolbar:
-      priority: 25
+      priority: 35
       direction: row
-      gap: 0.65rem
+      gap: 0.5rem
   byPageType:
     "404":
-      template: minimal
       positions:
         beforeBody: []
         left: []
         right: []
-    content:
-      template: default
+    content: {}
     folder:
-      template: default
       exclude:
         - reader-mode
+      positions:
+        right: []
     tag:
-      template: default
       exclude:
         - reader-mode
+      positions:
+        right: []
     canvas: {}
-    bases:
-      template: default
+    bases: {}

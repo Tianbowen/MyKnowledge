@@ -1,12 +1,6 @@
 @use "./variables.scss" as *;
 
-// ============================================================
-// Active theme: @quartz-themes/abate (via quartz.config.yaml)
-//
-// Sol Editorial UI was backed up to:
-//   backups/ui-sol-editorial-2026-08-18/
-// Restore instructions are in that folder's README.md.
-// ============================================================
-
-// Keep this file nearly empty so Abate CSS is not overridden.
-// Add only site-specific tweaks below if needed.
+// Quartz v5.0.0 default chrome + @quartz-themes/abate.
+// Keep empty so Abate / base styles are not overridden.
+// Sol Editorial UI backup: backups/ui-sol-editorial-2026-08-18/
+// Sol markup content backup: backups/content-sol-markup-2026-08-18/
