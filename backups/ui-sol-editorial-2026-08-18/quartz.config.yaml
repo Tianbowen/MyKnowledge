@@ -13,35 +13,34 @@ configuration:
     - templates
     - .obsidian
   theme:
-    # Active visual theme: @quartz-themes/abate (light only).
-    # Sol Editorial backup: backups/ui-sol-editorial-2026-08-18/
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Noto Sans SC
+      header: Noto Serif SC
       body: Noto Sans SC
       code: IBM Plex Mono
     colors:
+      # Sol Editorial — sunny warm default; deep amber night for dark
       lightMode:
-        light: "#faf8f8"
-        lightgray: "#e5e5e5"
-        gray: "#b8b8b8"
-        darkgray: "#4e4e4e"
-        dark: "#2b2b2b"
-        secondary: "#284b63"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#fff23688"
+        light: "#FFF8F1"
+        lightgray: "#F0E2D2"
+        gray: "#A89078"
+        darkgray: "#4A3424"
+        dark: "#2B1D14"
+        secondary: "#C2410C"
+        tertiary: "#EA580C"
+        highlight: rgba(251, 191, 36, 0.22)
+        textHighlight: "#FDE68ACC"
       darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
+        light: "#17120F"
+        lightgray: "#2C221C"
+        gray: "#A89888"
+        darkgray: "#F7EDE2"
+        dark: "#FFF7ED"
+        secondary: "#FDBA74"
+        tertiary: "#FB923C"
+        highlight: rgba(251, 146, 60, 0.2)
+        textHighlight: "#92400E99"
 plugins:
   - source: "@quartz-community/created-modified-date"
     enabled: true
@@ -113,11 +112,10 @@ plugins:
   - source: "@quartz-community/quartz-fonts"
     enabled: true
   - source: "@quartz-themes/core"
-    enabled: true
+    enabled: false
     options:
       theme: abate
       mode: light
-      themeFonts: true
   - source: "@quartz-community/remove-draft"
     enabled: true
   - source: "@quartz-community/explicit-publish"
@@ -205,8 +203,7 @@ plugins:
       position: header
       priority: 10
   - source: "@quartz-community/darkmode"
-    # Abate is light-only; keep toggle off to avoid a broken dark palette.
-    enabled: false
+    enabled: true
     layout:
       position: header
       priority: 30
@@ -301,15 +298,15 @@ layout:
         left: []
         right: []
     content:
-      template: default
+      template: reading
     folder:
-      template: default
+      template: reading
       exclude:
         - reader-mode
     tag:
-      template: default
+      template: reading
       exclude:
         - reader-mode
     canvas: {}
     bases:
-      template: default
+      template: reading
